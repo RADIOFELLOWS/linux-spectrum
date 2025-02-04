@@ -1,23 +1,33 @@
 import json
+import logging
 from typing import Annotated
 
+import pyvisa
 import typer
 
+logging.basicConfig(
+    level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s"
+)
 app = typer.Typer(no_args_is_help=True)
 
-default_settings = {
-    "ip": "192.168.0.1",
-    "device": "RS_FSV",
-    "overwrite_local_settings_state": True,
-    "sweep_points": 1001,
-    "average_state": False,
-    "number_of_averages": 10,
-    "freq_start": 1e6,
-    "freq_stop": 1e6,
-    "resolution_bw": 1e3,
-}
-
+json_file_path = "default_settings.json"
+with open(json_file_path, "r") as json_file:
+    default_settings = json.load(json_file)
 current_settings = default_settings.copy()
+
+
+@app.command()
+def send_command():
+    rm = pyvisa.ResourceManager("@py")
+    rm.list_resources()
+
+
+@app.command()
+def get_trace():
+    """
+    Get the trace of from the spectrum analyzer (prints to terminal and stdout)
+    """
+    pass
 
 
 @app.command()

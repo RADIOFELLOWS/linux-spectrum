@@ -1,0 +1,11 @@
+{
+    "ip": "192.168.0.1",
+    "device": "RS_FSV",
+    "overwrite_local_settings_state": true,
+    "sweep_points": 1001,
+    "average_state": false,
+    "number_of_averages": 10,
+    "freq_start": 1000000.0,
+    "freq_stop": 1000000.0,
+    "resolution_bw": 1000.0
+}

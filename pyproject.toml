@@ -5,7 +5,12 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "psutil>=6.1.1",
+    "pyvisa-py>=0.7.2",
+    "serial>=0.0.97",
     "typer>=0.15.1",
+    "usb>=0.0.83.dev0",
+    "zeroconf>=0.143.0",
 ]
 
 [project.scripts]
