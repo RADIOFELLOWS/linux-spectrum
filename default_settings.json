@@ -1,5 +1,5 @@
 {
-    "ip": "192.168.0.1",
+    "ip": "192.168.1.107",
     "device": "RS_FSV",
     "overwrite_local_settings_state": true,
     "sweep_points": 1001,
