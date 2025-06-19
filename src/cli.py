@@ -30,6 +30,7 @@ def instrument_context(current_settings):
     Raises:
         RuntimeError: If the IP address is not set or if there is an error communicating with the instrument.
     """
+    instrument = None
     try:
         ip_address = current_settings.get("ip")
         if not ip_address:
@@ -37,7 +38,9 @@ def instrument_context(current_settings):
 
         rm = pyvisa.ResourceManager("@py")
         # Open a connection to the instrument
-        instrument = rm.open_resource(f"TCPIP::{ip_address}::INSTR", timeout=5000)
+        instrument = rm.open_resource(
+            f"TCPIP::{ip_address}::INSTR", timeout=5000
+        )
         yield instrument  # Yield the instrument for use in the context
 
     except RuntimeError as e:
@@ -50,19 +53,20 @@ def instrument_context(current_settings):
         # Handle any other unexpected errors
         raise RuntimeError(f"An unexpected error occurred: {e}")
     finally:
-        # Ensure the instrument is closed properly
-        try:
-            instrument.close()
-        except Exception as e:
-            # Log or handle any errors that occur during closing
-            print(f"Error closing the instrument: {e}")
+        # Ensure the instrument is closed properly if it was opened
+        if instrument is not None:
+            try:
+                instrument.close()
+            except Exception as e:
+                # Log or handle any errors that occur during closing
+                print(f"Error closing the instrument: {e}")
 
 
 @app.command()
 def command(message: str):
     with instrument_context(current_settings) as instrument:
         resp = instrument.query(str(message))
-        typer.echo(f"repsponse: \n{resp}")
+        typer.echo(f"response: \n{resp}")
 
 
 @app.command()
