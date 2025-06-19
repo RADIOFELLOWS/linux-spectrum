@@ -62,7 +62,7 @@ def instrument_context(current_settings):
 def command(message: str):
     with instrument_context(current_settings) as instrument:
         resp = instrument.query(str(message))
-        typer.echo(f"repsponse: \n{resp}")
+        typer.echo(f"response: \n{resp}")
 
 
 @app.command()
