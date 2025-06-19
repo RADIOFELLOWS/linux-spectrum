@@ -81,10 +81,10 @@ def errorlog(truncate: Annotated[Optional[bool], typer.Option()] = True):
 
 @app.command()
 def ls():
-    """
-    List all connected instruments and retrieve their IDN.
-    Args:
-        current_settings (dict): The current settings containing the IP address of the instruments.
+    """List connected instruments and display their IDN.
+
+    The function relies on the global ``current_settings`` to access instrument
+    configuration and does not take any arguments.
     """
     console = Console()
     temp_settings = current_settings.copy()
