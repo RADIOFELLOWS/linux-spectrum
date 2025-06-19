@@ -30,6 +30,7 @@ def instrument_context(current_settings):
     Raises:
         RuntimeError: If the IP address is not set or if there is an error communicating with the instrument.
     """
+    instrument = None
     try:
         ip_address = current_settings.get("ip")
         if not ip_address:
@@ -50,12 +51,13 @@ def instrument_context(current_settings):
         # Handle any other unexpected errors
         raise RuntimeError(f"An unexpected error occurred: {e}")
     finally:
-        # Ensure the instrument is closed properly
-        try:
-            instrument.close()
-        except Exception as e:
-            # Log or handle any errors that occur during closing
-            print(f"Error closing the instrument: {e}")
+        # Close the instrument only if it was successfully opened
+        if instrument is not None:
+            try:
+                instrument.close()
+            except Exception as e:
+                # Log or handle any errors that occur during closing
+                print(f"Error closing the instrument: {e}")
 
 
 @app.command()
