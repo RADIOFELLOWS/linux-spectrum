@@ -14,6 +14,3 @@ pip install -e .
 linux-spectrum-cli
 ```
 
-```bash
-linux-spectrum-gui
-```

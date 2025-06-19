@@ -50,19 +50,20 @@ def instrument_context(current_settings):
         # Handle any other unexpected errors
         raise RuntimeError(f"An unexpected error occurred: {e}")
     finally:
-        # Ensure the instrument is closed properly
-        try:
-            instrument.close()
-        except Exception as e:
-            # Log or handle any errors that occur during closing
-            print(f"Error closing the instrument: {e}")
+        # Ensure the instrument is closed properly if it was created
+        if 'instrument' in locals():
+            try:
+                instrument.close()
+            except Exception as e:
+                # Log or handle any errors that occur during closing
+                print(f"Error closing the instrument: {e}")
 
 
 @app.command()
 def command(message: str):
     with instrument_context(current_settings) as instrument:
         resp = instrument.query(str(message))
-        typer.echo(f"repsponse: \n{resp}")
+        typer.echo(f"response: \n{resp}")
 
 
 @app.command()
